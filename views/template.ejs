@@ -5,7 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
   </head>
   <body>
+    <div id="app">
+      <h1>表单页面模板</h1>
+      <input type="text" v-model="msg" />
+      {{ msg }}
+    </div>
+    <script>
+      //创建vue的实例对象
+      let vue = new Vue({
+        el: "#app", 
+        data: {
+          msg: "hello world!",
+        },
+        methods: {},
+      });
+    </script>
   </body>
 </html>
