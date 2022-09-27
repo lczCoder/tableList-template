@@ -1,0 +1,7 @@
+{
+  "InitReact": "import React, { useState, useEffect } from 'react';",
+  "InitComponents": "import { QBox, QForm, QButton2, QTable2, QMessage } from 'wd-component'",
+  "ImportLodash": "import _ from 'lodash';",
+  "ImportApi": "import api from '@/services'",
+  "ImportUseData": "import useData from './useData';"
+}
