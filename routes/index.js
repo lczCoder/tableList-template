@@ -2,9 +2,7 @@ const router = require('koa-router')()
 const send = require('koa-send');
 
 router.get('/', async (ctx, next) => {
-  await ctx.render('index', {
-    title: 'Hello Koa 2!'
-  })
+  await ctx.render('template')
 })
 
 router.get('/string', async (ctx, next) => {
@@ -22,8 +20,8 @@ router.get('/error', async (ctx, next) => {
 })
 
 router.get('/download', async (ctx)=>{
-  const path = 'public/dwonloadFiles/index.jsx'
-  ctx.attachment(path);
+  // const path = 'public/dwonloadFiles/index.jsx'
+  // ctx.attachment(path);
   await send(ctx, path);
  })
 

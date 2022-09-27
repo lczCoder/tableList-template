@@ -1,27 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-  </head>
-  <body>
-    <div id="app">
-      <h1>表单页面模板</h1>
-      <input type="text" v-model="msg" />
-      {{ msg }}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>表单页面模板</h1>
+    <b>页面标题：</b> <input type="text" v-model="moduleTitle" />
+    <hr />
+    <b>搜索条件：</b><button @click="addItem('search')">+</button>
+    <br /><br />
+    <div v-for="item in searchList">
+      <span>搜索类型：</span><select v-model="item.type" id="0">
+        <option v-for="(opt,idx) in typeMap" :key="idx" :value="idx">
+          {{ opt }}
+        </option>
+      </select>
+      <span>文案：</span><input type="text" v-model="item.text" />
+      <span>字段名：</span><input type="text" v-model="item.field" />
+      <button @click="deleteItem('search',item.idx)">删除</button>
     </div>
-    <script>
-      //创建vue的实例对象
-      let vue = new Vue({
-        el: "#app", 
-        data: {
-          msg: "hello world!",
+    <span v-if="searchList.length<=0">暂无搜素条件</span>
+    <hr />
+    <b>表格字段：</b><button @click="addItem('table')">+</button><br /><br />
+    <div v-for="table in tableList">
+      <span>表格列：</span><input type="text" v-model="table.text" />
+      <span>宽度：</span><input type="text" v-model="table.width" />
+      <span>字段：</span><input type="text" v-model="table.field" />
+      <button @click="deleteItem('table',table.idx)">删除</button>
+    </div>
+    <span v-if="tableList.length<=0">暂无表格列字段</span>
+    <br />
+    <br />
+    <br />
+    <br />
+    <button @click="submitHandle">提交</button>
+    <p>{{ content }}</p>
+  </div>
+  <script>
+    //创建vue的实例对象
+    let vue = new Vue({
+      el: "#app",
+      data: {
+        content: "",
+        moduleTitle: "",
+        typeMap: ["输入框", "下拉框", "日期范围选择"],
+        searchList: [
+          {
+            idx: 0,
+            type: "", // 搜索类型
+            text: "", // 文案
+            field: "", // 字段
+          },
+        ],
+        tableList: [
+          {
+            idx: 0,
+            field: "", // 字段
+            text: "", // 文案
+            width: "自适应", // 宽度
+          },
+        ],
+      },
+      methods: {
+        // 添加搜索项
+        addItem (key) {
+          let lock = false;
+          let keyMap = {
+            search: "searchList",
+            table: "tableList",
+          };
+          let ObjeMap = {
+            search: {
+              idx: this.searchList.length,
+              type: "",
+              text: "",
+              field: "",
+            },
+            table: {
+              idx: this.tableList.length,
+              field: "",
+              text: "",
+              width: "",
+            },
+          };
+          let sourceObj = this[keyMap[key]][this[keyMap[key]].length - 1];
+          Object.keys(sourceObj).forEach((item) => {
+            if (sourceObj[item] === "") {
+              lock = true;
+            }
+          });
+          lock?window.alert('请把当前项填写完整才能继续新增'):this[keyMap[key]].push(ObjeMap[key])
         },
-        methods: {},
-      });
-    </script>
-  </body>
+        // 删除搜索项
+        deleteItem (key, idx) {
+          let keyMap = {
+            search: "searchList",
+            table: "tableList",
+          };
+          const list = this[keyMap[key]].filter((item) => item.idx !== idx);
+          this[keyMap[key]] = list;
+        },
+        // 数据提交
+        submitHandle () {
+          this.content = JSON.stringify(this.searchList);
+        },
+      },
+    });
+  </script>
+</body>
+
 </html>
