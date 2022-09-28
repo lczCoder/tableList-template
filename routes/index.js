@@ -31,15 +31,16 @@ router.post("/download", async (ctx) => {
    * params 配置表单参数
    * return 生成压缩包路径
    */
-  const fileName = await InitPage(data);
-  console.log("fileName", fileName);
-  const path = "public/dwonloadFiles/" + fileName;
-  console.log("path", path);
-  ctx.attachment(path);
-  await send(ctx, path);
-  // ctx.body = {
-  //   title: 'is ok'
-  // }
+  InitPage(data);
+  // console.log("fileName", fileName);
+  // const path = "public/dwonloadFiles/" + fileName;
+  // console.log("path", path);
+  // ctx.attachment(path);
+  // await send(ctx, path);
+  ctx.body = {
+    code:0,
+    msg: "ok",
+  };
 });
 
 module.exports = router;

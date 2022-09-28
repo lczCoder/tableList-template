@@ -6,7 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
+  <script src="https://cdn.bootcss.com/vue/2.5.2/vue.min.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
 </head>
 
@@ -52,6 +53,9 @@
         content:'',
         moduleTitle: "", // 模块标题
         typeMap: ["输入框", "下拉框", "日期范围选择"],
+        configContent:{
+
+        },
         searchList: [
           {
             idx: 0,
@@ -118,14 +122,14 @@
          axios.post('/download',{ title:this.moduleTitle,
             searchForm:this.searchList,
             tableList:this.tableList,},{
-              responseType:'blob'
+              responseType:'json' // blob
             }).then(res=>{
-              const link = document.createElement('a');
-              document.body.appendChild(link);
-              link.href = window.URL.createObjectURL(res.data)
-              link.download = 'iii.zip'
-              link.style.display = 'none'
-              link.click()
+              // const link = document.createElement('a');
+              // document.body.appendChild(link);
+              // link.href = window.URL.createObjectURL(res.data)
+              // link.download = 'iii.zip'
+              // link.style.display = 'none'
+              // link.click()
           console.log(res);
          })
         },
